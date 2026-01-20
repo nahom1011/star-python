@@ -50,8 +50,15 @@ def check_password_strength(password):
     """Evaluate password strength with advanced criteria."""
     score = 0
     feedback = []
+    entropy = calculate_entropy(password)
 
-    # Check length
+    # 1. Check against common passwords database FIRST
+    if password.lower() in COMMON_PASSWORDS:
+        score = 0
+        feedback.append("This is a common password. Choose a unique one.")
+        # We continue to provide other feedback, but the score remains anchored low
+
+    # 2. Check length
     if len(password) >= 12:
         score += 3
     elif len(password) >= 8:
@@ -99,19 +106,17 @@ def check_password_strength(password):
         score -= 1
         feedback.append("Avoid predictable placement like starting with an uppercase and ending with a digit.")
 
-    # Check against common passwords
-    if password.lower() in COMMON_PASSWORDS:
-        score = 0
-        feedback.append("This is a common password. Choose a unique one.")
-
-    # Check entropy
-    entropy = calculate_entropy(password)
+    # Check entropy scoring
     if entropy >= 4:
         score += 2
     elif entropy >= 3:
         score += 1
     else:
         feedback.append("Password lacks randomness. Use a more varied character set.")
+
+    # Final Database Override: Ensure common passwords are ALWAYS Weak
+    if password.lower() in COMMON_PASSWORDS:
+        return "Weak", feedback, entropy
 
     # Determine strength
     if score >= 10 or (score >= 8 and entropy >= 4):
