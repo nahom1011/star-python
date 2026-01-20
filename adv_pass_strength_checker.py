@@ -4,6 +4,7 @@ import random
 import string
 from tqdm import tqdm
 import time
+import getpass
 
 # Common passwords (small list for demo; extend with a file in production)
 COMMON_PASSWORDS = {'password', '123456', 'qwerty', 'admin', 'letmein'}
@@ -70,6 +71,16 @@ def check_password_strength(password):
         score -= 1
         feedback.append("Avoid common patterns like 'abc' or '123'.")
 
+    # Check for reversed patterns (e.g., '321', 'cba')
+    if re.search(r'(321|cba|fed|zyx)', password, re.IGNORECASE):
+        score -= 1
+        feedback.append("Avoid reversed patterns like '321' or 'cba'.")
+
+    # Check for predictable placement (e.g., Uppercase at start, digit at end)
+    if password[0].isupper() and password[-1].isdigit():
+        score -= 1
+        feedback.append("Avoid predictable placement like starting with an uppercase and ending with a digit.")
+
     # Check against common passwords
     if password.lower() in COMMON_PASSWORDS:
         score = 0
@@ -96,9 +107,7 @@ def check_password_strength(password):
 
 def main():
     print("Advanced Password Strength Checker")
-    print("Note: Password input will be visible in some environments (e.g., VS Code).")
-    print("For hidden input, run this script in a standard terminal (e.g., Command Prompt).")
-    password = input("Enter your password: ")
+    password = getpass.getpass("Enter your password: ")
 
     if not password:
         print("Password cannot be empty!")
