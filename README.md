@@ -45,6 +45,11 @@ python adv_pass_strength_checker.py
 1. **Theoretical Entropy**: The total search space size. This is our primary strength metric.
 2. **Shannon Entropy**: A measure of "internal" randomness. If this score is too low compared to the length (e.g., `aaaaaaaaaaa`), the password is downgraded to **Weak** regardless of length.
 
+## 🧠 Resource Usage
+
+> [!IMPORTANT]
+> **Memory Consumption**: Loading the full `rockyou.txt` database (14.3M+ passwords) into a Python set for $O(1)$ fast lookup requires approximately **400MB - 600MB of RAM**. This ensures lighting-fast analysis but may be a consideration for low-memory environments.
+
 ## 📜 License
 Distribute under the **MIT License**.
 
