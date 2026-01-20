@@ -5,9 +5,27 @@ import string
 from tqdm import tqdm
 import time
 import getpass
+import os
 
-# Common passwords (small list for demo; extend with a file in production)
+# Common passwords (initially demo, extended by rockyou.txt if available)
 COMMON_PASSWORDS = {'password', '123456', 'qwerty', 'admin', 'letmein'}
+
+def load_common_passwords(file_path="rockyou.txt"):
+    """Load common passwords from a file into the COMMON_PASSWORDS set."""
+    global COMMON_PASSWORDS
+    if not os.path.exists(file_path):
+        return False
+    
+    print(f"Loading common password database ({file_path})...")
+    try:
+        # Use latin-1 encoding for RockYou to avoid decoding errors
+        with open(file_path, "r", encoding="latin-1") as f:
+            for line in tqdm(f, desc="Loading Database", unit="lines", ncols=80):
+                COMMON_PASSWORDS.add(line.strip())
+        return True
+    except Exception as e:
+        print(f"Error loading database: {e}")
+        return False
 
 def calculate_entropy(password):
     """Calculate Shannon entropy of the password (in bits)."""
@@ -106,7 +124,10 @@ def check_password_strength(password):
     return strength, feedback, entropy
 
 def main():
-    print("Advanced Password Strength Checker")
+    # Attempt to load RockYou database
+    load_common_passwords()
+
+    print("\nAdvanced Password Strength Checker")
     password = getpass.getpass("Enter your password: ")
 
     if not password:

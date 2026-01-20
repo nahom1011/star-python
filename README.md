@@ -9,6 +9,7 @@ A robust and feature-rich Python utility designed to evaluate password security 
 
 - **🔍 Multi-Layered Analysis**: Evaluates length, character variety (uppercase, lowercase, digits, symbols), and Shannon entropy.
 - **🚫 Pattern Recognition**: Detects repeated characters and sequential patterns (e.g., `abc`, `123`).
+- **🗃️ 14M+ Password Database**: Integrates the full `rockyou.txt` list for world-class common password detection.
 - **🔄 Reversed Pattern Detection**: Identifies descending sequences such as `321`, `cba`, or `zyx`.
 - **⚠️ Predictable Placement Penalty**: Heuristic checks for common habits, like starting with an uppercase letter and ending with a digit (e.g., `Password123`).
 - **🔒 Secure Input**: Uses `getpass` to ensure passwords are hidden while typing in the terminal.
@@ -21,6 +22,7 @@ A robust and feature-rich Python utility designed to evaluate password security 
 ### Prerequisites
 - Python 3.6+
 - `tqdm` library
+- `rockyou.txt` (Included in the repository for common password checks)
 
 ### Installation
 1. **Clone the repository:**
