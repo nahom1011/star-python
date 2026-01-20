@@ -1,78 +1,52 @@
-# 🛡️ Advanced Password Strength Checker
+# 🛡️ Advanced Cybersecurity Password Analyzer
 
 [![Python Version](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A robust and feature-rich Python utility designed to evaluate password security using multi-layered analysis. It goes beyond simple length checks by incorporating Shannon entropy, pattern recognition, and heuristics for common security pitfalls.
+A professional-grade password security evaluator that utilizes prioritized breach detection and entropy-based mathematical models to classify password strength.
 
 ## ✨ Key Features
 
-- **🔍 Multi-Layered Analysis**: Evaluates length, character variety (uppercase, lowercase, digits, symbols), and Shannon entropy.
-- **🚫 Pattern Recognition**: Detects repeated characters and sequential patterns (e.g., `abc`, `123`).
-- **🗃️ 14M+ Password Database**: Integrates the full `rockyou.txt` list for world-class common password detection.
-- **🔄 Reversed Pattern Detection**: Identifies descending sequences such as `321`, `cba`, or `zyx`.
-- **⚠️ Predictable Placement Penalty**: Heuristic checks for common habits, like starting with an uppercase letter and ending with a digit (e.g., `Password123`).
-- **🔒 Secure Input**: Uses `getpass` to ensure passwords are hidden while typing in the terminal.
-- **📊 Visual Progress**: Integrated `tqdm` progress bar for a modern CLI experience.
-- **💡 Smart Suggestions**: Provides actionable feedback to improve weak passwords.
-- **🎲 Password Generator**: Automatically suggests a cryptographically strong 16-character password if the input is weak.
+- **🗃️ RockYou Breach Detection**: Prioritizes checking the password against the 14.3M+ leaked credentials (O(1) lookup).
+- **🧪 Theoretical Entropy (Brute-Force)**: Uses the formula $E = L \times \log_2(R)$ to calculate the mathematical bits of security.
+- **📉 Shannon Entropy (Pattern Detection)**: Measures the randomness of the password string to penalize repeated characters and predictable patterns.
+- **🔒 Secure Input**: Hidden typing using `getpass`.
+- **📊 Detailed Security Report**: Provides clear breakdown of entropy scores, breach status, and length.
+- **💡 Cryptographic Generator**: Suggests 18+ character high-entropy passwords for weak inputs.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.6+
 - `tqdm` library
-- `rockyou.txt` (Included in the repository for common password checks)
+- `rockyou.txt` (Required for breach detection)
 
 ### Installation
-1. **Clone the repository:**
-   ```powershell
-   git clone https://github.com/nahom1011/star-python.git
-   cd star-python
-   ```
-2. **Install dependencies:**
-   ```powershell
-   pip install tqdm
-   ```
+```powershell
+pip install tqdm
+```
 
 ### Usage
-Run the script directly from your terminal:
 ```powershell
 python adv_pass_strength_checker.py
 ```
 
-## 🛠️ Technical Details
+## 🛠️ Security Framework
 
-### Scoring System
-| Criteria | Logic | Score Adjustment |
+### Classification Tiers
+| Entropy (Bits) | Strength | Description |
 | :--- | :--- | :--- |
-| **Length** | >= 12 chars | +3 |
-| **Length** | 8 - 11 chars | +2 |
-| **Variety** | Uppercase, Lowercase, Digits | +1 each |
-| **Variety** | Special Characters | +2 |
-| **Entropy** | >= 4 bits | +2 |
-| **Entropy** | >= 3 bits | +1 |
-| **Bad Habits** | Repeated chars / Common Patterns | -1 |
-| **Bad Habits** | Reversed Patterns / Predictable Placement | -1 |
+| **-** | **Compromised** | Found in RockYou breach list. |
+| **< 35** | **Weak** | Vulnerable to instant brute-force. |
+| **36 - 59** | **Medium** | Resistant to simple attacks, vulnerable to GPU clusters. |
+| **60+** | **Strong** | Cryptographically secure for standard use. |
 
-### Entropy Analysis
-The tool calculates **Shannon Entropy** to measure the randomness of the password. Higher entropy values indicate a password that is harder to crack via brute-force or dictionary attacks.
-
-## 📝 Example Output
-
-```text
-Advanced Password Strength Checker
-Enter your password: 
-Analyzing password strength...
-Processing: 100%|█████████████████████████████| 100/100 [00:01<00:00]
-
-Password Strength: Strong
-Entropy: 5.68 bits (higher is better)
-Your password is strong and meets all advanced criteria!
-```
+### Entropy Metrics
+1. **Theoretical Entropy**: The total search space size. This is our primary strength metric.
+2. **Shannon Entropy**: A measure of "internal" randomness. If this score is too low compared to the length (e.g., `aaaaaaaaaaa`), the password is downgraded to **Weak** regardless of length.
 
 ## 📜 License
-Distribute under the **MIT License**. See `LICENSE` for more information.
+Distribute under the **MIT License**.
 
 ---
-*Developed for the security-conscious developer.*
+*Developed for security portfolios and high-risk credential validation.*
